@@ -1,5 +1,5 @@
 /**
- * Utility for programmatically triggering and resolving PagerDuty incidents.
+ * Utility for pragmatically triggering and resolving PagerDuty incidents.
  *
  * <h3>Usage</h3>
  *

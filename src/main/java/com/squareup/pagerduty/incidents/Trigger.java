@@ -16,6 +16,8 @@
 package com.squareup.pagerduty.incidents;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import static com.squareup.pagerduty.incidents.Util.checkArgument;
@@ -27,8 +29,8 @@ public final class Trigger extends Event {
   private static final int MAX_DESCRIPTION_LENGTH = 1024;
 
   private Trigger(String incidentKey, String description, String client, String clientUrl,
-      Map<String, String> details) {
-    super(null, incidentKey, TYPE_TRIGGER, description, client, clientUrl, details);
+      Map<String, String> details, List<Map<String, String>> contexts) {
+    super(null, incidentKey, TYPE_TRIGGER, description, client, clientUrl, details, contexts);
   }
 
   /**
@@ -42,6 +44,7 @@ public final class Trigger extends Event {
     private String client;
     private String clientUrl;
     private Map<String, String> details = new LinkedHashMap<>();
+    private List<Map<String, String>> contexts = new LinkedList<>();
 
     /**
      * Build data to trigger a new incident.
@@ -98,8 +101,15 @@ public final class Trigger extends Event {
       return this;
     }
 
+    /** Arbitrary name-value pairs which will be included as a context in the incident. */
+    public Builder addContext(Map<String, String> context) {
+      checkNotNull(context, "context");
+      this.contexts.add(context);
+      return this;
+    }
+
     public Trigger build() {
-      return new Trigger(incidentKey, description, client, clientUrl, details);
+      return new Trigger(incidentKey, description, client, clientUrl, details, contexts);
     }
   }
 }

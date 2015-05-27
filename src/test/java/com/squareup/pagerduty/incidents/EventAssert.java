@@ -19,6 +19,9 @@ import org.assertj.core.api.AbstractAssert;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.data.MapEntry;
 
+import java.util.HashMap;
+import java.util.Map;
+
 final class EventAssert extends AbstractAssert<EventAssert, Event> {
   static EventAssert assertThat(Event event) {
     return new EventAssert(event);
@@ -77,6 +80,12 @@ final class EventAssert extends AbstractAssert<EventAssert, Event> {
   public EventAssert hasDetails(MapEntry... entries) {
     isNotNull();
     Assertions.assertThat(actual.details).containsExactly(entries);
+    return this;
+  }
+
+  public EventAssert hasContexts(Map<String, String>... entries) {
+    isNotNull();
+    Assertions.assertThat(actual.contexts).containsExactly(entries);
     return this;
   }
 }

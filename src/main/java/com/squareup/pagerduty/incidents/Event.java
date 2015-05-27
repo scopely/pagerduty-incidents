@@ -16,6 +16,7 @@
 package com.squareup.pagerduty.incidents;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 class Event {
@@ -29,9 +30,10 @@ class Event {
   final String client;
   final String client_url;
   final Map<String, String> details;
+  final List<Map<String, String>> contexts;
 
   Event(String serviceKey, String incidentKey, String eventType, String description, String client,
-      String clientUrl, Map<String, String> details) {
+      String clientUrl, Map<String, String> details, List<Map<String, String>> contexts) {
     this.service_key = serviceKey;
     this.incident_key = incidentKey;
     this.event_type = eventType;
@@ -39,9 +41,11 @@ class Event {
     this.client = client;
     this.client_url = clientUrl;
     this.details = new LinkedHashMap<>(details);
+    this.contexts = contexts;
   }
 
   Event withApiKey(String apiKey) {
-    return new Event(apiKey, incident_key, event_type, description, client, client_url, details);
+    return new Event(apiKey, incident_key, event_type, description, client,
+        client_url, details, contexts);
   }
 }

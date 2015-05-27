@@ -87,4 +87,13 @@ public final class TriggerTest {
       assertThat(e).hasMessage("details");
     }
   }
+
+  @Test public void triggerContextsRequiredIfSpecified() {
+    try {
+      new Trigger.Builder("Hi").addContext(null);
+      fail();
+    } catch (NullPointerException e) {
+      assertThat(e).hasMessage("context");
+    }
+  }
 }

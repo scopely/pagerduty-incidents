@@ -43,6 +43,7 @@ public final class PagerDutyTest {
         .withIncidentKey("ouch")
         .addDetails("Location", "Left index finger")
         .addDetails(TestUtil.map("Foo", "Bar", "Kit", "Kat"))
+        .addContext(TestUtil.map("type", "link", "href", "https://square.com"))
         .build();
     pagerDuty.notify(trigger);
 
@@ -52,7 +53,8 @@ public final class PagerDutyTest {
         .hasIncidentKey("ouch")
         .hasEventType("trigger")
         .hasDetails(entry("Location", "Left index finger"), entry("Foo", "Bar"),
-            entry("Kit", "Kat"));
+            entry("Kit", "Kat"))
+        .hasContexts(TestUtil.map("type", "link", "href", "https://square.com"));
   }
 
   @Test public void basicResolve() {
