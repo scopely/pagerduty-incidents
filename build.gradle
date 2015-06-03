@@ -1,0 +1,45 @@
+buildscript {
+  //noinspection GroovyAssignabilityCheck
+  repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+      url 'https://scopelybin.artifactoryonline.com/scopelybin/all'
+      credentials {
+        username "reader"
+        password "scopely123"
+      }
+    }
+  }
+  //noinspection GroovyAssignabilityCheck
+  dependencies {
+    classpath 'com.google.guava:guava:17.0'
+    classpath 'com.scopely:scopely-publish-plugin:1.12'
+  }
+}
+
+apply plugin: 'java'
+apply plugin: 'scopely-publishing'
+
+scopely {
+  publishing {
+    artifactId 'pagerduty-incidents-internal'
+  }
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+configurations {
+  provided
+  compile.exclude group: 'commons-logging'
+}
+
+dependencies {
+  compile 'com.squareup.retrofit:retrofit:1.9.0'
+
+  // testing dependencies
+  testCompile 'junit:junit:4.11'
+  testCompile 'org.assertj:assertj-core:1.6.1'
+  testCompile 'org.mockito:mockito-core:1.9.5'
+}
